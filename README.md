@@ -64,9 +64,11 @@ We are looking forward to see what you come up with!
 - asset manager class & refactor load logic
 - refactor main loop, constants
 - fix passing around everything under sun
-- add pause
+- add pause (p key)
 - add score
-- jump
+- jump (space)
 - further refactoring
-- reset
-- high schore record
+- reset (r key)
+- high schore/personal best record
+- add to github and heroku
+- setup ava unit testing

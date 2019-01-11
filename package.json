@@ -4,7 +4,8 @@
     "description": "",
     "main": "web.js",
     "scripts": {
-        "start": "node web.js"
+        "start": "node web.js",
+        "test": "ava"
     },
     "author": "dan.wash@ceros.com",
     "license": "",
@@ -13,5 +14,13 @@
     },
     "dependencies": {
         "http-server": "^0.10.0"
+    },
+    "devDependencies": {
+        "ava": "^1.0.1"
+    },
+    "ava": {
+        "files": [
+            "tests/**/*.js"
+        ]
     }
 }

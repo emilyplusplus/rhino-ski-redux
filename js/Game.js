@@ -3,19 +3,17 @@ const GAME_HEIGHT = window.innerHeight;
 const GAME_PIXEL_RATIO = window.devicePixelRatio; //should be ~2 for retina screens, ~1 for regular screens
 const GAME_TICKS_PER_FRAME = 6; //determines animation speed
 
-let fontColor = 'black';
-
 class Game {
     constructor() {
-        //this.fontColor = 'black'
+        this.fontColor = 'black'
     }
 
     darkMode(enabled) {
         if(enabled) {
-            fontColor = 'white';
+            this.fontColor = 'white';
             $('body').css("background","#111").css("color","#eee");
         } else {
-            fontColor = 'black';
+            this.fontColor = 'black';
             $('body').css("background","#eee").css("color","#111");
         }
     }
@@ -33,46 +31,27 @@ class Game {
 
         let player = new Player()
         let obstacles = new Obstacles()
+        let scoreboard = new Scoreboard()
         let requestedFrame = null;
-        let score = 0;
-        let highScore = parseFloat(localStorage.getItem('highScore')) || 0
 
-
-        //let game = this
+        let game = this
 
         let gameLoop = function() {
-           
             ctx.save();
 
+            ctx.scale(GAME_PIXEL_RATIO, GAME_PIXEL_RATIO); //retina support
+            ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-                ctx.scale(GAME_PIXEL_RATIO, GAME_PIXEL_RATIO); //retina support
-                ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+            /* Update/Move/Animate */
+            player.move(obstacles.placeNewObstacle, obstacles)
+            let hit = player.checkIfHitObstacle(obstacles.obstacles)
+            scoreboard.update(hit, player.skierDirection == 2 || player.skierDirection == 3 ||player.skierDirection == 4)
 
-                /* Update/Move/Animate */
-                player.move(obstacles.placeNewObstacle, obstacles)
-                let hit = player.checkIfHitObstacle(obstacles.obstacles)
-
-                if(hit) {
-                    if(score > highScore) {
-                        localStorage.setItem('highScore', score)
-                        highScore = score
-                    }
-                }
-
-                if(player.skierDirection == 2 || player.skierDirection == 3 ||player.skierDirection == 4) score += 0.36;
-
-                /* Render/Draw */
-                player.render(ctx)
-                obstacles.drawObstacles(ctx, player);
-                
-                ctx.font = '48px Arial';
-                ctx.fillStyle = fontColor
-                ctx.fillText(Math.floor(score) + '\'', GAME_WIDTH / 2 - ctx.measureText(Math.floor(score) + '\'').width / 2, 60);
-
-                ctx.font = '12px Arial';
-                ctx.fillStyle = fontColor
-                ctx.fillText('Personal Best: ' + Math.floor(highScore) + '\'', GAME_WIDTH / 2 - ctx.measureText('Personal Best: ' + Math.floor(highScore) + '\'').width / 2, 80);
-
+            /* Render/Draw */
+            obstacles.drawObstacles(ctx, player);
+            player.render(ctx)
+            scoreboard.render(ctx, game.fontColor)
+            
             ctx.restore();
 
             requestedFrame = requestAnimationFrame(gameLoop);
