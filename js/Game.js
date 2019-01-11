@@ -3,19 +3,15 @@ const GAME_HEIGHT = window.innerHeight;
 const GAME_PIXEL_RATIO = window.devicePixelRatio; //should be ~2 for retina screens, ~1 for regular screens
 const GAME_TICKS_PER_FRAME = 6; //determines animation speed
 
+let player = null;
+let obstacles = null;
+let scoreboard = null;
+let game = null;
+
 class Game {
     constructor() {
-        this.fontColor = 'black'
-    }
-
-    darkMode(enabled) {
-        if(enabled) {
-            this.fontColor = 'white';
-            $('body').css("background","#111").css("color","#eee");
-        } else {
-            this.fontColor = 'black';
-            $('body').css("background","#eee").css("color","#111");
-        }
+        this.requestedFrame = null
+        this.context = null;
     }
 
     setup() {
@@ -26,81 +22,84 @@ class Game {
                 width: GAME_WIDTH + 'px',
                 height: GAME_HEIGHT + 'px'
             });
+
         $('body').append(canvas);
-        let ctx = canvas[0].getContext('2d');
+        this.context = canvas[0].getContext('2d');
 
-        let player = new Player()
-        let obstacles = new Obstacles()
-        let scoreboard = new Scoreboard()
-        let requestedFrame = null;
-
-        let game = this
-
-        let gameLoop = function() {
-            ctx.save();
-
-            ctx.scale(GAME_PIXEL_RATIO, GAME_PIXEL_RATIO); //retina support
-            ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-
-            /* Update/Move/Animate */
-            player.move(obstacles.placeNewObstacle, obstacles)
-            let hit = player.checkIfHitObstacle(obstacles.obstacles)
-            scoreboard.update(hit, player.skierDirection == 2 || player.skierDirection == 3 ||player.skierDirection == 4)
-
-            /* Render/Draw */
-            obstacles.drawObstacles(ctx, player);
-            player.render(ctx)
-            scoreboard.render(ctx, game.fontColor)
-            
-            ctx.restore();
-
-            requestedFrame = requestAnimationFrame(gameLoop);
-        };
-
-        function keyPressed(event) {
-            switch(event.key) {
-                case 'p':
-                    if(requestedFrame) {
-                        cancelAnimationFrame(requestedFrame);
-                        requestedFrame = null;
-                    } else {
-                        requestedFrame = requestAnimationFrame(gameLoop);
-                    }
-
-                    event.preventDefault();
-                    break;
-                case 'r':
-                    gameOver = false
-                    player = new Player()
-                    obstacles = new Obstacles()
-                    score = 0;
-                    obstacles.placeInitialObstacles();
-                    if(!requestedFrame) requestedFrame = requestAnimationFrame(gameLoop);
-                    
-                    event.preventDefault();
-                    break;
-            }
-        }
+        //Setup game objects
+        player = new Player();
+        obstacles = new Obstacles();
+        scoreboard = new Scoreboard();
 
         $(window).keydown(event => {
-            player.update(event, obstacles.placeNewObstacle, obstacles)
-            keyPressed(event)
+            player.keyListener(event);
+            game.keyListener(event);
         });
 
         AssetManager.getInstance().setup().then(() => {
             obstacles.placeInitialObstacles();
-            requestedFrame = requestAnimationFrame(gameLoop);
+            this.requestedFrame = requestAnimationFrame(this.gameLoop);
         }).catch((err) => {
             console.error(err)
         });
     }
+
+    gameLoop() {
+        game.context.save();
+
+        game.context.scale(GAME_PIXEL_RATIO, GAME_PIXEL_RATIO); //retina support
+        game.context.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+        /* Update Game Objects */
+        player.update()
+        scoreboard.update()
+
+        /* Render Game Objects */
+        obstacles.render(game.context)
+        player.render(game.context)
+        scoreboard.render(game.context)
+        
+        game.context.restore();
+        game.requestedFrame = requestAnimationFrame(game.gameLoop);
+    }
+
+    keyListener(event) {
+        switch(event.key) {
+            case 'p':
+                if(this.requestedFrame) {
+                    cancelAnimationFrame(this.requestedFrame);
+                    this.requestedFrame = null;
+                } else {
+                    this.requestedFrame = requestAnimationFrame(this.gameLoop);
+                }
+
+                event.preventDefault();
+                break;
+            case 'r':
+                player = new Player();
+                obstacles = new Obstacles();
+                scoreboard = new Scoreboard();
+
+                obstacles.placeInitialObstacles();
+                if(!this.requestedFrame) this.requestedFrame = requestAnimationFrame(this.gameLoop);
+                
+                event.preventDefault();
+                break;
+        }
+    }
 }
 
 $(document).ready(() => {
-    let game = new Game()
+    game = new Game()
     game.setup()
 
     $('#darkMode').click((event) => {
-        game.darkMode(event.target.checked)
+        if(event.target.checked) {
+            scoreboard.color = 'white';
+            $('body').css("background","#111").css("color","#eee");
+        } else {
+            scoreboard.color = 'black';
+            $('body').css("background","#eee").css("color","#111");
+        }
     });
 })

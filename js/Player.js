@@ -9,7 +9,7 @@ class Player {
         this.ticks = 0
     }
 
-    update(event, placeNewObstacle, obstacles) {
+    keyListener(event) {
         switch(event.key) {
             case 'ArrowLeft':
                 if(this.skierDirection === 0) {
@@ -17,7 +17,7 @@ class Player {
                 }
                 else if(this.skierDirection === 1) {
                     this.skierMapX -= this.skierSpeed;
-                    placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                    obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
                 }
                 else {
                     this.skierDirection--;
@@ -30,7 +30,7 @@ class Player {
                 }
                 else if(this.skierDirection === 5) {
                     this.skierMapX += this.skierSpeed;
-                    placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                    obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
                 }
                 else {
                     this.skierDirection++;
@@ -40,7 +40,7 @@ class Player {
             case 'ArrowUp':
                 if(this.skierDirection === 1 || this.skierDirection === 5) {
                     this.skierMapY -= this.skierSpeed;
-                    placeNewObstacle(6, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                    obstacles.placeNewObstacle(6, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
                 }
                 event.preventDefault();
                 break;
@@ -91,24 +91,24 @@ class Player {
         return skierAssetName;
     };
 
-    move(placeNewObstacle, obstacles) {
+    update() {
         switch(this.skierDirection) {
             case 2:
                 this.skierMapX -= Math.round(this.skierSpeed / 1.4142);
                 this.skierMapY += Math.round(this.skierSpeed / 1.4142);
 
-                placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
                 break;
             case 3:
                 this.skierMapY += this.skierSpeed;
 
-                placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
                 break;
             case 4:
                 this.skierMapX += this.skierSpeed / 1.4142;
                 this.skierMapY += this.skierSpeed / 1.4142;
 
-                placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
                 break;
         }
 
@@ -126,9 +126,11 @@ class Player {
 
             this.ticks++;
         }
+
+        this.checkIfHitObstacle()
     }
 
-    checkIfHitObstacle(obstacles) {
+    checkIfHitObstacle() {
         if(this.jumping) return false;
 
         var skierAssetName = this.getSkierAsset();
@@ -140,7 +142,7 @@ class Player {
             bottom: this.skierMapY + skierImage.height + GAME_HEIGHT / 2
         };
 
-        var collision = _.find(obstacles, (obstacle) => {
+        var collision = _.find(obstacles.obstacles, (obstacle) => {
             var obstacleImage = AssetManager.getInstance().getImage(obstacle.type);
             var obstacleRect = {
                 left: obstacle.x,
@@ -173,3 +175,5 @@ class Player {
         ctx.drawImage(skierImage, x, y, skierImage.width, skierImage.height);
     }
 }
+
+if(typeof window === 'undefined') module.exports = Player

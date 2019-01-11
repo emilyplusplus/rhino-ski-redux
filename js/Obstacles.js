@@ -9,7 +9,7 @@ class Obstacles {
         this.obstacles = [];
     }
 
-    drawObstacles(ctx, player) {
+    render(ctx) {
         var newObstacles = [];
 
         _.each(this.obstacles, (obstacle) => {

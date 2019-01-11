@@ -1,31 +1,32 @@
 class Scoreboard {
     constructor() {
         this.score = 0;
-        if(typeof window !== 'undefined')
+        this.color = 'black';
+        this.highScore = 0
+
+        if(typeof window !== 'undefined') {
             this.highScore = parseFloat(localStorage.getItem('highScore')) || 0
-        else
-            this.highScore = 0
+        }
     }
 
-    update(hit, moving) {
-        if(hit) {
+    update() {
+        if(player.skierDirection == 0) {
             if(this.score > this.highScore) {
                 if(typeof window !== 'undefined') localStorage.setItem('highScore', this.score)
                 this.highScore = this.score
             }
         }
 
-        if(moving) this.score += 0.36;
-
+        if(player.skierDirection == 2 || player.skierDirection == 3 ||player.skierDirection == 4) this.score += 0.36;
     }
 
-    render(ctx, fontColor) {
+    render(ctx) {
         ctx.font = '48px Arial';
-        ctx.fillStyle = fontColor
+        ctx.fillStyle = this.color
         ctx.fillText(Math.floor(this.score) + '\'', GAME_WIDTH / 2 - ctx.measureText(Math.floor(this.score) + '\'').width / 2, 60);
 
         ctx.font = '12px Arial';
-        ctx.fillStyle = fontColor
+        ctx.fillStyle = this.color
         ctx.fillText('Personal Best: ' + Math.floor(this.highScore) + '\'', GAME_WIDTH / 2 - ctx.measureText('Personal Best: ' + Math.floor(this.highScore) + '\'').width / 2, 80);
     }
 }
