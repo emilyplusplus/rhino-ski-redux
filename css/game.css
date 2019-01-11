@@ -1,6 +1,41 @@
 html, body {
   margin: 0;
   padding: 0;
+  font-family: 'Arial', 'sans-serif';
+}
+
+#topLeft {
+  z-index: 900;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  clear: both;
+}
+
+#topLeft .tooltip {
+  opacity: 0;
+  width: 240px;
+  background-color: black;
+  font-size: 12px;
+  color: #fff;
+  text-align: left;
+  padding: 10px;
+  margin: 5px 0 0 0;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 1;
+}
+
+#topLeft:hover .tooltip {
+  opacity: 1;
+}
+
+#tooltip {
+  transition: .4s;
+}
+
+#tooltip.active {
+  opacity: 1;
 }
 
 #topRight {

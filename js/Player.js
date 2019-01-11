@@ -48,6 +48,7 @@ class Player {
                 if(this.skierDirection == 0) {
                     this.skierMapY += 16;
                 }
+                $('#tooltip').removeClass('active')
                 this.skierDirection = 3;
                 event.preventDefault();
                 break;

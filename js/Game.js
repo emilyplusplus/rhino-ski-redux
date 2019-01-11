@@ -98,6 +98,10 @@ $(document).ready(() => {
     game = new Game()
     game.setup()
 
+    if(!localStorage.getItem('highScore')) {
+        $('#tooltip').addClass('active')
+    }
+
     $('#darkMode').click((event) => {
         localStorage.setItem('darkMode', event.target.checked)
         if(event.target.checked) {
