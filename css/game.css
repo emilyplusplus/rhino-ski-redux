@@ -12,30 +12,30 @@ html, body {
   clear: both;
 }
 
-#topLeft .tooltip {
+#topLeft:hover #tooltip {
+  opacity: 1;
+  display: block;
+}
+
+#tooltip {
+  transition: .4s;
   opacity: 0;
   width: 240px;
   background-color: black;
+  display: none;
   font-size: 12px;
   color: #fff;
   text-align: left;
   padding: 10px;
-  margin: 5px 0 0 0;
+  margin: 3px 0 0 0;
   border-radius: 5px;
   position: absolute;
   z-index: 1;
 }
 
-#topLeft:hover .tooltip {
-  opacity: 1;
-}
-
-#tooltip {
-  transition: .4s;
-}
-
 #tooltip.active {
   opacity: 1;
+  display: block;
 }
 
 #topRight {
