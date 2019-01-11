@@ -14,3 +14,12 @@ test('score updates', t => {
 	else
 		t.fail()
 })
+
+test('score construction test', t => {
+	let scoreboard = new Scoreboard()
+
+	if(scoreboard.color == 'black')
+		t.pass()
+	else
+		t.fail()
+})

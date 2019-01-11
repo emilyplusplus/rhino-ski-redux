@@ -72,3 +72,5 @@ We are looking forward to see what you come up with!
 - high schore/personal best record
 - add to github and heroku
 - setup ava unit testing
+- add rhino/end game at 2k
+- bug fixes
