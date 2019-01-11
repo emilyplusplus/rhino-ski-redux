@@ -31,4 +31,4 @@ class Scoreboard {
     }
 }
 
-if(typeof window === 'undefined') module.exports = Scoreboard
+if(typeof window === 'undefined') module.exports = Scoreboard //export for unit testing if running in node

@@ -3,6 +3,7 @@ const GAME_HEIGHT = window.innerHeight;
 const GAME_PIXEL_RATIO = window.devicePixelRatio; //should be ~2 for retina screens, ~1 for regular screens
 const GAME_TICKS_PER_FRAME = 6; //determines animation speed
 
+let rhino = null;
 let player = null;
 let obstacles = null;
 let scoreboard = null;
@@ -27,6 +28,7 @@ class Game {
         this.context = canvas[0].getContext('2d');
 
         //Setup game objects
+        rhino = new Rhino();
         player = new Player();
         obstacles = new Obstacles();
         scoreboard = new Scoreboard();
@@ -51,11 +53,13 @@ class Game {
         game.context.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
         /* Update Game Objects */
+        rhino.update()
         player.update()
         scoreboard.update()
 
         /* Render Game Objects */
         obstacles.render(game.context)
+        rhino.render(game.context)
         player.render(game.context)
         scoreboard.render(game.context)
         
@@ -76,6 +80,7 @@ class Game {
                 event.preventDefault();
                 break;
             case 'r':
+                rhino = new Rhino();
                 player = new Player();
                 obstacles = new Obstacles();
                 scoreboard = new Scoreboard();
@@ -94,12 +99,18 @@ $(document).ready(() => {
     game.setup()
 
     $('#darkMode').click((event) => {
+        localStorage.setItem('darkMode', event.target.checked)
         if(event.target.checked) {
             scoreboard.color = 'white';
-            $('body').css("background","#111").css("color","#eee");
+            $('body').css("background","#1B1D22").css("color","#fff");
         } else {
             scoreboard.color = 'black';
-            $('body').css("background","#eee").css("color","#111");
+            $('body').css("background","#fff").css("color","#1B1D22");
         }
     });
+
+    let darkMode = localStorage.getItem('darkMode')
+    if(darkMode && darkMode === 'true') {
+        $('#darkMode')[0].click(this);
+    }
 })

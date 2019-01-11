@@ -3,7 +3,7 @@ class Player {
         this.skierDirection = 5;
         this.skierMapX = 0;
         this.skierMapY = 0;
-        this.skierSpeed = 8;
+        this.skierSpeed = 0.1;
         this.jumping = false
         this.animationFrame = 0
         this.ticks = 0
@@ -45,6 +45,9 @@ class Player {
                 event.preventDefault();
                 break;
             case 'ArrowDown':
+                if(this.skierDirection == 0) {
+                    this.skierMapY += 16;
+                }
                 this.skierDirection = 3;
                 event.preventDefault();
                 break;
@@ -94,17 +97,20 @@ class Player {
     update() {
         switch(this.skierDirection) {
             case 2:
+                if(this.skierSpeed < 8) this.skierSpeed += .1
                 this.skierMapX -= Math.round(this.skierSpeed / 1.4142);
                 this.skierMapY += Math.round(this.skierSpeed / 1.4142);
 
                 obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
                 break;
             case 3:
+                if(this.skierSpeed < 8) this.skierSpeed += .1
                 this.skierMapY += this.skierSpeed;
 
                 obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
                 break;
             case 4:
+                if(this.skierSpeed < 8) this.skierSpeed += .1
                 this.skierMapX += this.skierSpeed / 1.4142;
                 this.skierMapY += this.skierSpeed / 1.4142;
 
@@ -156,6 +162,7 @@ class Player {
 
         if(collision) {
             this.skierDirection = 0;
+            this.skierSpeed = 0.1;
 
             /*this.animationFrame = 0;
             this.jumping = false;
@@ -167,6 +174,8 @@ class Player {
     }
 
     render(ctx) {
+        if(rhino.eating) return;
+
         var skierAssetName = this.getSkierAsset();
         var skierImage = AssetManager.getInstance().getImage(skierAssetName);
         var x = (GAME_WIDTH - skierImage.width) / 2;
@@ -176,4 +185,4 @@ class Player {
     }
 }
 
-if(typeof window === 'undefined') module.exports = Player
+if(typeof window === 'undefined') module.exports = Player // export for unit testing if running in node

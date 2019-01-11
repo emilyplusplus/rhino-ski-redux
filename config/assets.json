@@ -1,4 +1,12 @@
 {
+    "rhinoRunLeft": "img/rhino_run_left.png",
+    "rhinoRunLeft2": "img/rhino_run_left_2.png",
+    "rhinoLift": "img/rhino_lift.png",
+    "rhinoLiftMouthOpen": "img/rhino_lift_mouth_open.png",
+    "rhinoEat1": "img/rhino_lift_eat_1.png",
+    "rhinoEat2": "img/rhino_lift_eat_2.png",
+    "rhinoEat3": "img/rhino_lift_eat_3.png",
+    "rhinoEat4": "img/rhino_lift_eat_4.png",
     "skierCrash": "img/skier_crash.png",
     "skierLeft": "img/skier_left.png",
     "skierLeftDown": "img/skier_left_down.png",
