@@ -113,3 +113,5 @@ class Obstacles {
         }
     };
 }
+
+if(typeof window === 'undefined') module.exports = Obstacles // export for unit testing if running in node

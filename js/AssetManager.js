@@ -53,3 +53,5 @@ class AssetManager {
       return new Promise(loadImages);
     }
 }
+
+if(typeof window === 'undefined') module.exports = AssetManager // export for unit testing if running in node
