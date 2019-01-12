@@ -47,8 +47,8 @@ class Player {
                 event.preventDefault();
                 break;
             case 'ArrowDown':
-                if(this.skierDirection == 0) {
-                    this.skierMapY += GAME_SKIER_SPEED_MAX;
+                if(!rhino.eating && this.skierDirection == 0) {
+                    this.skierMapY += GAME_SKIER_SPEED_MAX * 2;
                 }
                 $('#tooltip').removeClass('active')
                 this.skierDirection = 3;
@@ -98,6 +98,8 @@ class Player {
     };
 
     update() {
+        
+
         switch(this.skierDirection) {
             case 2:
                 if(this.skierSpeed < GAME_SKIER_SPEED_MAX) this.skierSpeed += .1

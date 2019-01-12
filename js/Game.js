@@ -80,10 +80,12 @@ class Game {
                 event.preventDefault();
                 break;
             case 'r':
+                let scoreboardColorSaved  = scoreboard.color
                 rhino = new Rhino();
                 player = new Player();
                 obstacles = new Obstacles();
                 scoreboard = new Scoreboard();
+                scoreboard.color = scoreboardColorSaved
 
                 obstacles.placeInitialObstacles();
                 if(!this.requestedFrame) this.requestedFrame = requestAnimationFrame(this.gameLoop);

@@ -1,3 +1,5 @@
+const GAME_END_FT = 2000;
+
 class Rhino {
     constructor() {
         this.x = GAME_WIDTH;
@@ -39,7 +41,7 @@ class Rhino {
     };
 
     update() {
-        if(scoreboard.score < 2000) return;
+        if(scoreboard.score < GAME_END_FT) return;
 
         this.ticks++
 

@@ -26,10 +26,11 @@ shit (one of Ceros’s core values!) about the position" from the ReadMe to hear
 	- **Help Menu**: I added a help menu to upper left that when you hover over shows you controls and  a few other bits of info. When the game is first loaded this help menu is auto opened and continues displaying until the game starts. On consecutive page loads its hidden by default, assuming that if you have an exisitng high score you have likely played game alreayd and know the controls
 	- Player jump (spacebar, including animation)
 	- Game score (including high score which is saved to localStorage and persists between page refreshes) and score rendering
+		- 15mph = 22ft/s and player gains 0.36' (points/distance traveled in feet) per frame and at 60fps that's ~22 ft/s
 	- Rhino end game event: It appears on screen after 2k feet traveled and eats you, animating the whole time
 	- Pause (p key)
 	- Reset (r key)
-	- Gravity: player slowly accelerates from 0 to max speed (15 mph)
+	- Gravity: player slowly accelerates from 0 to max speed (15 mph).
 4. Started documentation/changelog and setup GitHub/Heroku
 5. Wrote unit tests using Ava
 	- I wrote a handful of unit tests (not as exhaustive as they could be, but sufficient) to test out core logical functions of each class
@@ -49,6 +50,9 @@ To clone and run this repository you'll need  [Git](https://git-scm.com/)  and  
 
 ## Source Code / Change Log
 Below is a rough change log for v0.2.0 (current final version as of time of writing this) that I made as I was making changes, more info can also be found in commit history if desired.
+
+#### Known Bugs
+No known bugs
 
 #### v0.2.0 Change Log:
 
