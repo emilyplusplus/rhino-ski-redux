@@ -1,26 +1,25 @@
 {
     "name": "ceros-ski",
-    "version": "0.0.2",
-    "description": "",
+    "version": "0.2.0",
+    "description": "Vertical scrolling game where you avoid obstacles to obtain a high score, inspired by SkiFree.",
     "main": "web.js",
     "scripts": {
         "start": "node web.js",
+        "dev": "nodemon web.js",
         "test": "ava"
     },
     "author": "dan.wash@ceros.com",
-    "license": "",
-    "engines": {
-        "node": "8.4.0"
-    },
+    "contributors": ["Emily Carlsen"],
+    "license": "MIT",
     "dependencies": {
-        "http-server": "^0.10.0"
+        "http-server": "^0.11.1"
     },
     "devDependencies": {
         "ava": "^1.0.1"
     },
     "ava": {
         "files": [
-            "tests/**/*.js"
+            "tests/*.js"
         ]
     }
 }

@@ -29,8 +29,8 @@ class AssetManager {
               var assetDeferred = new $.Deferred();
   
               assetImage.onload = function() {
-                  assetImage.width /= GAME_PIXEL_RATIO;
-                  assetImage.height /= GAME_PIXEL_RATIO;
+                  assetImage.width /= 2;
+                  assetImage.height /= 2;
   
                   manager.assets[assetName] = assetImage;
                   assetDeferred.resolve();

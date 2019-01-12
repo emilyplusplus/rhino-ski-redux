@@ -21,16 +21,33 @@ html, body {
   transition: .4s;
   opacity: 0;
   width: 240px;
-  background-color: black;
+  background-color: #333;
   display: none;
   font-size: 12px;
-  color: #fff;
+  color: #eee;
   text-align: left;
-  padding: 10px;
-  margin: 3px 0 0 0;
+  padding: 20px;
+  margin: 10px 0 0 -8px;
   border-radius: 5px;
   position: absolute;
   z-index: 1;
+}
+
+#tooltip:before{
+  content:'';
+  display:block;
+  width:0;
+  height:0;
+  position:absolute;
+
+  transform: rotate(90deg);
+
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right:8px solid #333;
+  left:12px;
+
+  top:-12px;
 }
 
 #tooltip.active {
