@@ -47,7 +47,7 @@ class Obstacles {
         });
     };
 
-    placeNewObstacle(direction, player, obs, GAME_WIDTH, GAME_HEIGHT) {
+    placeNewObstacle(dir) {
         var shouldPlaceObstacle = _.random(1, 8);
         if(shouldPlaceObstacle !== 8) {
             return;
@@ -58,26 +58,26 @@ class Obstacles {
         var topEdge = player.skierMapY;
         var bottomEdge = player.skierMapY + GAME_HEIGHT;
 
-        switch(direction) {
+        switch(dir) {
             case 1: // left
-            obs.placeRandomObstacle(leftEdge - 50, leftEdge, topEdge, bottomEdge);
+                this.placeRandomObstacle(leftEdge - 50, leftEdge, topEdge, bottomEdge);
                 break;
             case 2: // left down
-            obs.placeRandomObstacle(leftEdge - 50, leftEdge, topEdge, bottomEdge);
-            obs.placeRandomObstacle(leftEdge, rightEdge, bottomEdge, bottomEdge + 50);
+                this.placeRandomObstacle(leftEdge - 50, leftEdge, topEdge, bottomEdge);
+                this.placeRandomObstacle(leftEdge, rightEdge, bottomEdge, bottomEdge + 50);
                 break;
             case 3: // down
-            obs.placeRandomObstacle(leftEdge, rightEdge, bottomEdge, bottomEdge + 50);
+                this.placeRandomObstacle(leftEdge, rightEdge, bottomEdge, bottomEdge + 50);
                 break;
             case 4: // right down
-            obs.placeRandomObstacle(rightEdge, rightEdge + 50, topEdge, bottomEdge);
-            obs.placeRandomObstacle(leftEdge, rightEdge, bottomEdge, bottomEdge + 50);
+                this.placeRandomObstacle(rightEdge, rightEdge + 50, topEdge, bottomEdge);
+                this.placeRandomObstacle(leftEdge, rightEdge, bottomEdge, bottomEdge + 50);
                 break;
             case 5: // right
-            obs.placeRandomObstacle(rightEdge, rightEdge + 50, topEdge, bottomEdge);
+                this.placeRandomObstacle(rightEdge, rightEdge + 50, topEdge, bottomEdge);
                 break;
             case 6: // up
-            obs.placeRandomObstacle(leftEdge, rightEdge, topEdge - 50, topEdge);
+                this.placeRandomObstacle(leftEdge, rightEdge, topEdge - 50, topEdge);
                 break;
         }
     };

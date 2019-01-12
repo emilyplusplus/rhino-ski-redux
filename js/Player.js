@@ -19,7 +19,7 @@ class Player {
                 }
                 else if(this.skierDirection === 1) {
                     this.skierMapX -= GAME_SKIER_SPEED_MAX;
-                    obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                    obstacles.placeNewObstacle(1);
                 }
                 else {
                     this.skierDirection--;
@@ -32,7 +32,7 @@ class Player {
                 }
                 else if(this.skierDirection === 5) {
                     this.skierMapX += GAME_SKIER_SPEED_MAX;
-                    obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                    obstacles.placeNewObstacle(5);
                 }
                 else {
                     this.skierDirection++;
@@ -42,7 +42,7 @@ class Player {
             case 'ArrowUp':
                 if(this.skierDirection === 1 || this.skierDirection === 5) {
                     this.skierMapY -= this.skierSpeed;
-                    obstacles.placeNewObstacle(6, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                    obstacles.placeNewObstacle(6);
                 }
                 event.preventDefault();
                 break;
@@ -106,20 +106,20 @@ class Player {
                 this.skierMapX -= Math.round(this.skierSpeed / 1.4142);
                 this.skierMapY += Math.round(this.skierSpeed / 1.4142);
 
-                obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                obstacles.placeNewObstacle(2);
                 break;
             case 3:
                 if(this.skierSpeed < GAME_SKIER_SPEED_MAX) this.skierSpeed += .1
                 this.skierMapY += this.skierSpeed;
 
-                obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                obstacles.placeNewObstacle(3);
                 break;
             case 4:
                 if(this.skierSpeed < GAME_SKIER_SPEED_MAX) this.skierSpeed += .1
                 this.skierMapX += this.skierSpeed / 1.4142;
                 this.skierMapY += this.skierSpeed / 1.4142;
 
-                obstacles.placeNewObstacle(this.skierDirection, this, obstacles, GAME_WIDTH, GAME_HEIGHT);
+                obstacles.placeNewObstacle(4);
                 break;
         }
 
