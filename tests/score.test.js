@@ -2,7 +2,7 @@ import test from 'ava';
 import Scoreboard from '../js/Scoreboard'
 import Player from '../js/Player'
 
-test('score updates', t => {
+test('score updates moving', t => {
 	global.player = new Player()
 	global.player.skierDirection = 3; //down
 
@@ -15,10 +15,29 @@ test('score updates', t => {
 		t.fail()
 })
 
-test('score construction test', t => {
+test('score updates not moving', t => {
+	global.player = new Player()
+	global.player.skierDirection = 5; //right
+
 	let scoreboard = new Scoreboard()
 
-	if(scoreboard.color == 'black')
+	for(let i = 0; i < 10; i++) scoreboard.update()
+	if(scoreboard.score === 0)
+		t.pass()
+	else
+		t.fail()
+})
+
+test('highscore updates', t => {
+	global.player = new Player()
+	global.player.skierDirection = 0; //right
+
+	let scoreboard = new Scoreboard()
+	scoreboard.score = 32
+
+	scoreboard.update()
+
+	if(scoreboard.highScore === scoreboard.score)
 		t.pass()
 	else
 		t.fail()
